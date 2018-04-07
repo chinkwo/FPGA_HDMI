@@ -1,12 +1,12 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company: AHPU
+// Engineer: Chinkwo Yu
 // 
 // Create Date: 2018/03/19 14:13:44
-// Design Name: 
+// Design Name: FPGA_HDMI
 // Module Name: par2ser
-// Project Name: 
+// Project Name: FPGA_HDMI
 // Target Devices: 
 // Tool Versions: 
 // Description: 
