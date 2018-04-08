@@ -1,30 +1,30 @@
 module  hdmi_ctrl(
-	input    wire     	pixel_clk		 ,
-	input    wire     	rst_n      		 , 
-	input    wire[23:0] rgb_data      	 ,//from rgb_data_gen to vga_module rgb_data
+	input    wire     	pixel_clk	 ,
+	input    wire     	rst_n      	 , 
+	input    wire[23:0] 	rgb_data      	 ,//from rgb_data_gen to vga_module rgb_data
 	                                	    
 	output   wire		pixel_start_flag,                                	    
-	output	 wire       pixel_de    	 ,//to  rgb_data_gen                              	
+	output	 wire       	pixel_de    	 ,//to  rgb_data_gen                              	
 	output   wire		r_ser_dat_p 	 ,
 	output   wire		r_ser_dat_n 	 ,
 	output   wire		g_ser_dat_p 	 ,
-    output   wire		g_ser_dat_n 	 ,
-    output   wire		b_ser_dat_p 	 ,
-    output   wire		b_ser_dat_n 	 ,
+    	output   wire		g_ser_dat_n 	 ,
+    	output   wire		b_ser_dat_p 	 ,
+    	output   wire		b_ser_dat_n 	 ,
                                          
-    output   wire		clk_ser_dat_p 	 ,
-    output   wire		clk_ser_dat_n 	 ,
+    	output   wire		clk_ser_dat_p 	 ,
+    	output   wire		clk_ser_dat_n 	 ,
     
-    output   wire       hdmi_en        
+    	output   wire      	 hdmi_en        
     
 );
 wire       	clkx1    	;
 wire       	clkx5    	;//to par2ser
 wire       	h_sync    	;//to b_encode_inst c0
 wire       	v_sync    	;//to b_encode_inst c1
-wire[7:0]	r			;
-wire[7:0]	g			;   
-wire[7:0]	b			;
+wire[7:0]	r		;
+wire[7:0]	g		;   
+wire[7:0]	b		;
 wire[9:0]	r_10bit		;//r_encode_inst -> r_par2ser_inst
 wire[9:0]	g_10bit		;//g_encode_inst -> g_par2ser_inst
 wire[9:0]	b_10bit		;//b_encode_inst -> b_par2ser_inst
