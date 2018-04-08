@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
-// Engineer: 
+// Engineer: Chinkwo Yue
 // 
 // Create Date: 2018/03/19 14:33:50
 // Design Name: 
@@ -24,13 +24,13 @@ module	vga_module(
 		input	wire		sclk				,
 		input	wire		rst_n				,
 		input	wire		vga_clk				,
-		input   wire[23:0]  rgb_data			,
-		output	reg			h_sync				,
-		output	reg			v_sync				,
-		output  wire        pixel_de			,
-		output  wire        pixel_start_flag	,//屏幕上衣服图片的开始，即打到屏幕上的第一个像素点
-		output	wire[7:0]	r					,
-		output	wire[7:0]	g					,
+		input   wire[23:0]  	rgb_data			,
+		output	reg		h_sync				,
+		output	reg		v_sync				,
+		output  wire        	pixel_de			,
+		output  wire        	pixel_start_flag		,//屏幕上一副图片的开始，即打到屏幕上的第一个像素点
+		output	wire[7:0]	r				,
+		output	wire[7:0]	g				,
 		output	wire[7:0]	b       			
 );
 //-----------------------------------------------------------//
@@ -98,37 +98,37 @@ parameter Vde_end=803;
 
 	reg[10:0]		h_cnt		;	//h_cnt==LinePeriod
 	reg[10:0]		v_cnt		;	//v_cnt==FramePeriod
-	reg				hsync_de	;	//行有效区域（Vde_start~Vde_end）
-	reg				vsync_de	;	//场有效区域（Hde_start~Hde_end）
+	reg			hsync_de	;	//行有效区域（Vde_start~Vde_end）
+	reg			vsync_de	;	//场有效区域（Hde_start~Hde_end）
 
 assign	pixel_start_flag	=(h_cnt==H_SyncPulse&&v_cnt==V_SyncPulse)?1'b1:1'b0;	
 //H_cnt行计数器	
 always@(posedge	vga_clk	or	negedge	rst_n)
 		if(rst_n==0)
-			h_cnt	<=	0;
+			h_cnt	<=	1'b0;
 		else	if(h_cnt==LinePeriod-1)
-			h_cnt	<=	0;
+			h_cnt	<=	1'b0;
 		else
-			h_cnt	<=	h_cnt	+	1;
+			h_cnt	<=	h_cnt	+	1'b1;
 			
 			
 //V_cnt行计数器				
 always@(posedge	vga_clk	or	negedge	rst_n)
 		if(rst_n==0)
-			v_cnt	<=	0;
+			v_cnt	<=	1'b0;
 		else	if(v_cnt==(FramePeriod-1)&&h_cnt==(LinePeriod-1))
-			v_cnt	<=	0;
+			v_cnt	<=	1'b0;
 		else	if(h_cnt==LinePeriod-1)
-			v_cnt	<=	v_cnt	+	1;
+			v_cnt	<=	v_cnt	+	1'b1;
 			
 //h_sync行同步信号
 always@(posedge	vga_clk	or	negedge	rst_n)
 		if(rst_n==0)
-			h_sync	<=	0;
+			h_sync	<=	1'b0;
 		else	if(h_cnt==1)
-			h_sync	<=	0;
+			h_sync	<=	1'b0;
 		else	if(h_cnt>=H_SyncPulse-1)
-			h_sync	<=	1;
+			h_sync	<=	1'b1;
 			
 //产生hsync_de信号
 always@(posedge	vga_clk	or	negedge	rst_n)			
@@ -142,11 +142,11 @@ always@(posedge	vga_clk	or	negedge	rst_n)
 //v_sync行同步信号
 always@(posedge	vga_clk	or	negedge	rst_n)
 		if(rst_n==0)
-			v_sync	<=	1;
+			v_sync	<=	1'b1;
 		else	if(v_cnt==0)
-			v_sync	<=	0;
+			v_sync	<=	1'b0;
 		else	if(v_cnt==V_SyncPulse-1)
-			v_sync	<=	1;
+			v_sync	<=	1'b1;
 
 //产生vsync_de信号
 always@(posedge	vga_clk	or	negedge	rst_n)			
